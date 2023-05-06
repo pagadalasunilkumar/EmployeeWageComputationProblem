@@ -2,8 +2,9 @@ echo "Welcome to EmployeeWageComputationProblem where we are calculating the sal
 perHourSalary=20;
 workingHour=0;
 totalSalary=0;
-
-for ((day=1; day<=20 ;day++))
+totalWorkingHour=0;
+day=1;
+while [[ $day -le 20 && $totalWorkingHour -lt 40 ]]
 do
 	isPresent=$((RANDOM%3));
 	case $isPresent in
@@ -22,9 +23,15 @@ do
 		workingHour=4;
 		;;
 	esac
+	totalWorkingHour=$(($totalWorkingHour + $workingHour));
+	if [ $totalWorkingHour -gt 40 ]
+	then
+		totalWorkingHour=$(($totalWorkingHour - $workingHour));
+		break;
+	fi
 	salary=$(($perHourSalary * $workingHour));
 	totalSalary=$(($totalSalary + $salary));
+	((day++));
 done
-
-echo "Employee has earned $totalSalary $ in a month";
+echo "Employee has earned $totalSalary $ in a month (Total working Hour : $totalWorkingHour)";
 
