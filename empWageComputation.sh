@@ -1,11 +1,21 @@
-echo "welcome EmployeeWageComputationProblem where we are calculating the salary of the employee"
+echo "Welcome to EmployeeWageComputationProblem where we are calculating the salary of the employee"
+
 isPresent=1;
-randomcheck=$((RANDOM%2));
-if [ $isPresent -eq $randomcheck ];
+isFullTime=2;
+empRatePerHr=20;
+randomcheck=$((RANDOM%3));
+
+if [ $isFullTime -eq $randomcheck ];
 then
-empRateperHr=20;
-empHrs=8;
-salary=$(($empHrs*$empRateperHr));
+    empHrs=8;
+elif [ $isPartTime -eq $randomcheck ];  # Error: isPartTime variable is not defined
+then
+    empHrs=4;
 else
-echo "salary=0"
+    empHrs=0;
 fi
+
+salary=$(($empHrs * $empRatePerHr));  # Corrected the variable name empRateperHr to empRatePerHr
+
+echo "Employee salary: $salary"
+
