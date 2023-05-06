@@ -4,7 +4,7 @@ function getWorkingHours() {
         1)
             echo 8 ;; 
         2)
-            echo 4 ;; 
+            echo 4 ;;  
         *)
             echo 0 ;;  
     esac
@@ -16,7 +16,8 @@ MAX_WORKING_DAYS=20
 MAX_WORKING_HRS=100
 totalWorkingDays=0
 totalWorkingHrs=0
-
+totalSalary=0
+declare -a dailyWage
 while [[ $totalWorkingDays -lt $MAX_WORKING_DAYS && $totalWorkingHrs -lt $MAX_WORKING_HRS ]]
 do
     ((totalWorkingDays++))
@@ -24,7 +25,14 @@ do
     empHrs=$(getWorkingHours $empCheck)
     totalWorkingHrs=$((totalWorkingHrs + empHrs))
     salary=$((empHrs * EMP_RATE_PER_HR))
+    dailyWage[$totalWorkingDays]=$salary
     totalSalary=$((totalSalary + salary))
+done
+
+echo "Daily Wages:"
+for ((day=1; day<=totalWorkingDays; day++))
+do
+    echo "Day $day: ${dailyWage[$day]}"
 done
 
 echo "Total Salary: $totalSalary"
