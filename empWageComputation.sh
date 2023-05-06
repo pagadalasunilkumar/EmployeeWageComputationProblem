@@ -1,21 +1,37 @@
 echo "Welcome to EmployeeWageComputationProblem where we are calculating the salary of the employee"
+function calculateWorkingHour() {
+	case $1 in
+		0)
+			workingHour=0;
+			;;
 
-isPresent=1;
-isFullTime=2;
-empRatePerHr=20;
-randomcheck=$((RANDOM%3));
+		1)
+			workingHour=8;
+			;;
+		2)
+			workingHour=4;
+			;;
+	esac;
+	echo $workingHour;
+}
 
-if [ $isFullTime -eq $randomcheck ];
-then
-    empHrs=8;
-elif [ $isPartTime -eq $randomcheck ];  # Error: isPartTime variable is not defined
-then
-    empHrs=4;
-else
-    empHrs=0;
-fi
+perHourSalary=20;
+totalSalary=0;
+totalWorkingHour=0;
+day=1;
 
-salary=$(($empHrs * $empRatePerHr));  # Corrected the variable name empRateperHr to empRatePerHr
-
-echo "Employee salary: $salary"
+while [[ $day -le 20 && $totalWorkingHour -lt 40 ]]
+do
+	wHour=$(calculateWorkingHour $((RANDOM%3)));
+	totalWorkingHour=$(($totalWorkingHour + $wHour));
+	if [ $totalWorkingHour -gt 40 ]
+	then
+		totalWorkingHour=$(($totalWorkingHour - $wHour));
+		break;
+	fi
+	salary=$(($perHourSalary * $wHour));
+	totalSalary=$(($totalSalary + $salary));
+	((day++));
+done
+echo "Employee has earned $totalSalary $ in a month (Total working Hour : $totalWorkingHour)";
 
